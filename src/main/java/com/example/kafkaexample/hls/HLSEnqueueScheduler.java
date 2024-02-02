@@ -44,7 +44,7 @@ public class HLSEnqueueScheduler {
         MediaPlaylist playlist = parser.readPlaylist(masterPlaylist);
         List<MediaSegment> segmanets = playlist.mediaSegments();
         for(MediaSegment segment : segmanets){
-            byte[] videofile=null;
+            byte[] videofile;
             if(maxVideoId.compareTo(segment.uri())<0){
                 maxVideoId = segment.uri();
                 //System.out.println(segment.uri());
