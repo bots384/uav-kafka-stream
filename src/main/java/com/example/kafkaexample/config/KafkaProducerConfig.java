@@ -26,8 +26,7 @@ public class KafkaProducerConfig {
     @Value("${spring.kafka.properties.sasl.jaas.config}")
     private String saslJaasConfig;
 
-    @Value("${spring.kafka.template.default-topic}")
-    private String defaultTopic;
+
 
     @Bean
     public Map<String, Object> producerConfig(){

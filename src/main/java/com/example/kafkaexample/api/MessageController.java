@@ -3,13 +3,12 @@ package com.example.kafkaexample.api;
 
 import com.example.kafkaexample.hls.HLSService;
 import com.example.kafkaexample.kafka.KafkaService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/kafka")
@@ -25,10 +24,11 @@ public class MessageController {
 
 
     @PostMapping("kemea_uav_video")
-    public void startStreamingUAVvideo() throws Exception{
+    public String startStreamingUAVvideo() throws Exception{
         System.out.println("Sending ............");
         //byte[] test = hlsService.getHLSContent();
         kafkaService.startSendingVideo2Kafka();
+        return "Sending to Kafka Started !!!!!";
     }
 
 
