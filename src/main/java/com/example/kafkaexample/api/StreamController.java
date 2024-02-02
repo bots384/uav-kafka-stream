@@ -1,34 +1,37 @@
 package com.example.kafkaexample.api;
 
 
-import com.example.kafkaexample.hls.HLSService;
 import com.example.kafkaexample.kafka.KafkaService;
-import org.apache.coyote.Response;
+import com.example.kafkaexample.memory.HLSQueue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/kafka")
-public class MessageController {
+public class StreamController {
     private final KafkaService kafkaService;
 
 
     @Autowired
-    public MessageController(KafkaService kafkaService){
+    public StreamController(KafkaService kafkaService){
         this.kafkaService = kafkaService;
 
     }
 
 
-    @PostMapping("kemea_uav_video")
-    public String startStreamingUAVvideo() throws Exception{
+    @PostMapping("start_kafka_stream")
+    public String startKafkaStreaming() throws Exception{
         System.out.println("Sending ............");
-        //byte[] test = hlsService.getHLSContent();
+        HLSQueue.doSend2Kafka=true;
         kafkaService.startSendingVideo2Kafka();
         return "Sending to Kafka Started !!!!!";
+    }
+
+    @PostMapping("stop_kafka_stream")
+    public String stopKafkaStreaming() throws Exception{
+        System.out.println("Sending ............");
+        HLSQueue.doSend2Kafka=false;
+        return "Sending to Kafka Stopped !!!!!";
     }
 
 

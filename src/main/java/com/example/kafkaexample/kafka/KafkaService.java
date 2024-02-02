@@ -26,7 +26,7 @@ public class KafkaService {
 
     @Async
     public void startSendingVideo2Kafka() throws Exception{
-        while(true){
+        while(HLSQueue.doSend2Kafka){
             while(!HLSQueue.hlsQueue.isEmpty()){
                 Packet packet = HLSQueue.hlsQueue.poll();
                 kafkaTemplate.send(kafka_topic,packet.getKey(), packet.getData());

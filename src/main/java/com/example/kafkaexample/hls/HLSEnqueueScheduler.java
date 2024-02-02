@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Component
@@ -28,12 +27,14 @@ public class HLSEnqueueScheduler {
 
     @Scheduled(fixedRateString = "${hlsRate}") // Adjust the rate according to your needs (e.g., every 10 seconds)
     public void fetchAndEnqueHLSContent() throws Exception{
-        byte[] hlsHeadFile = hlsService.fetchHLSFile(hlsTopic+".m3u8");
-        if(hlsHeadFile!=null){
+        if(HLSQueue.doSend2Kafka) {
+            byte[] hlsHeadFile = hlsService.fetchHLSFile(hlsTopic + ".m3u8");
+            if (hlsHeadFile != null) {
 
-            HLSQueue.hlsQueue.add(new Packet(hlsTopic+".m3u8", hlsHeadFile));
-            //System.out.println("HLS Enqueued!!!!!");
-            fetchHLSfiles(hlsHeadFile);
+                HLSQueue.hlsQueue.add(new Packet(hlsTopic + ".m3u8", hlsHeadFile));
+                //System.out.println("HLS Enqueued!!!!!");
+                fetchHLSfiles(hlsHeadFile);
+            }
         }
     }
 
