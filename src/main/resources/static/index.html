@@ -3,8 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Kafka Streamer</title>
+    <script>
+        function postData(url, data) {
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.text())
+                .then(data => alert('Response: ' + data))
+                .catch(error => console.error('Error:', error));
+        }
+
+        function handleClick(buttonId) {
+            var url = "http://localhost:8080/api/kafka/";
+            var data = "";
+            url= url +buttonId;
+
+            postData(url, data);
+        }
+    </script>
 </head>
 <body>
-
+<h1>Kafka Streamer</h1>
+<button onclick="handleClick('start_kafka_stream')">Start Streaming</button>
+<button onclick="handleClick('stop_kafka_stream')">Stop Streaming</button>
 </body>
 </html>
