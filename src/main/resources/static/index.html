@@ -3,6 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Kafka Streamer</title>
+    <style>
+        /* CSS styles */
+        .kafka-streamer-container {
+            text-align: center;
+            margin-top: 50px;
+            background-color: beige;
+        }
+
+        .stream-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .stream-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
     <script>
         function postData(url, data) {
             return fetch(url, {
@@ -20,15 +43,17 @@
         function handleClick(buttonId) {
             let url = "http://localhost:8080/api/kafka/";
             const data = "";
-            url= url +buttonId;
+            url = url + buttonId;
 
             postData(url, data);
         }
     </script>
 </head>
-<body>
-<h1>Kafka Streamer</h1>
-<button onclick="handleClick('start_kafka_stream')">Start Streaming</button>
-<button onclick="handleClick('stop_kafka_stream')">Stop Streaming</button>
+<body style="background-color: beige">
+<div class="kafka-streamer-container">
+    <h1>Kafka UAV HLS Streamer</h1>
+    <button class="stream-button" onclick="handleClick('start_kafka_stream')">Start Streaming</button>
+    <button class="stream-button" onclick="handleClick('stop_kafka_stream')">Stop Streaming</button>
+</div>
 </body>
 </html>

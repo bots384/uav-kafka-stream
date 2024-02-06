@@ -22,16 +22,25 @@ public class StreamController {
     @PostMapping("start_kafka_stream")
     public String startKafkaStreaming() throws Exception{
         System.out.println("Sending ............");
-        HLSQueue.doSend2Kafka=true;
-        kafkaService.startSendingVideo2Kafka();
-        return "Sending to Kafka Started !!!!!";
+        if(!HLSQueue.doSend2Kafka){
+            HLSQueue.doSend2Kafka=true;
+            kafkaService.startSendingVideo2Kafka();
+            return "Sending to Kafka Started !!!!!";
+        }else{
+            return "Streaming is enabled!!!!";
+        }
+
     }
 
     @PostMapping("stop_kafka_stream")
     public String stopKafkaStreaming() throws Exception{
-        System.out.println("Sending ............");
-        HLSQueue.doSend2Kafka=false;
-        return "Sending to Kafka Stopped !!!!!";
+        if(HLSQueue.doSend2Kafka){
+            HLSQueue.doSend2Kafka=false;
+            System.out.println("Sending to Kafka Stopped !!!!!");
+            return "Sending to Kafka Stopped !!!!!";
+        }else{
+            return "Streaming is disabled!!!!";
+        }
     }
 
 
